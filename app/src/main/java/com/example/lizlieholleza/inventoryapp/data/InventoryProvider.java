@@ -18,6 +18,11 @@ public class InventoryProvider extends ContentProvider {
 
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
+    static {
+        uriMatcher.addURI(InventoryContract.CONTENT_AUTHORITY, InventoryContract.PATH_INVENTORY, INV);
+        uriMatcher.addURI(InventoryContract.CONTENT_AUTHORITY, InventoryContract.PATH_INVENTORY + "/#", INV_ID);
+    }
+
     @Override
     public boolean onCreate() {
         return false;
