@@ -25,7 +25,9 @@ public class InventoryProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        return false;
+        // initialize database helper object to gain access to the database
+        inventoryHelper = new InventoryHelper(getContext());
+        return true;
     }
 
     @Override
