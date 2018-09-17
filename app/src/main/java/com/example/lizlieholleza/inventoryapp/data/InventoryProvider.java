@@ -88,7 +88,7 @@ public class InventoryProvider extends ContentProvider {
             throw new IllegalArgumentException("Please input a valid quantity");
         }
 
-        String picture = contentValues.getAsString(InventoryEntry.COLUMN_INV_PICTURE);
+        Integer picture = contentValues.getAsInteger(InventoryEntry.COLUMN_INV_PICTURE);
         if(picture == null) {
             throw new IllegalArgumentException("Please add a picture to the item");
         }
@@ -170,7 +170,7 @@ public class InventoryProvider extends ContentProvider {
         }
 
         if (contentValues.containsKey(InventoryEntry.COLUMN_INV_PICTURE)) {
-            String pic = contentValues.getAsString(InventoryEntry.COLUMN_INV_PICTURE);
+            Integer pic = contentValues.getAsInteger(InventoryEntry.COLUMN_INV_PICTURE);
             if(pic == null) {
                 throw new IllegalArgumentException("Picture is required");
             }
