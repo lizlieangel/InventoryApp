@@ -28,7 +28,7 @@
                 tools:text="Name:"/>
             <EditText
                 android:id="@+id/edit_inv_price"
-                android:hint="@string/hintinv_price"
+                android:hint="@string/hint_inv_price"
                 android:inputType="textCapWords"
                 style="@style/EditorFieldStyle"
                 tools:text="Price:"/>
