@@ -26,10 +26,10 @@ public class InventoryCursorAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        ImageView imageView = (ImageView) findViewById(R.id.image);
-        TextView nameTextView = (TextView) findViewById(R.id.name);
-        TextView quantityTextView = (TextView) findViewById(R.id.quantity);
-        TextView priceTextView = (TextView) findViewById(R.id.price);
+        ImageView imageView = (ImageView) view.findViewById(R.id.image);
+        TextView nameTextView = (TextView) view.findViewById(R.id.name);
+        TextView quantityTextView = (TextView) view.findViewById(R.id.quantity);
+        TextView priceTextView = (TextView) view.findViewById(R.id.price);
 
         int imageIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_INV_PICTURE);
         int nameIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_INV_NAME);
