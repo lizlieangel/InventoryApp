@@ -31,6 +31,12 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     };
 
     @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_editor);
+    }
+
+    @Override
     public Loader<Cursor> onCreateLoader(int i, @Nullable Bundle bundle) {
         return null;
     }
