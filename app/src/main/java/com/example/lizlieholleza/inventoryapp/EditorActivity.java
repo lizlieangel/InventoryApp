@@ -1,5 +1,6 @@
 package com.example.lizlieholleza.inventoryapp;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,7 +23,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     private boolean invHasChanged = false;
 
     private View.OnTouchListener touchListener = new View.OnTouchListener() {
-
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
             invHasChanged = true;
@@ -34,6 +34,23 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
+        Intent intent = getIntent();
+        currentInvUri = intent.getData();
+        if(currentInvUri == null) {
+            setTitle(getString(R.string.editor_activity_title_new_inv));
+            invalidateOptionsMenu();
+        } else {
+            setTitle(getString(R.string.editor_activity_title_new_inv));
+            getLoaderManager().initLoader(EXISTING_INV_LOADER, null, this);
+        }
+
+        nameEditText = (EditText) findViewById(R.id.edit_inv_name);
+        priceEditText = (EditText) findViewById(R.id.edit_inv_price);
+        quantityEditText = (EditText) findViewById(R.id.edit_inv_qty);
+
+        nameEditText.setOnTouchListener(touchListener);
+        priceEditText.setOnTouchListener(touchListener);
+        quantityEditText.setOnTouchListener(touchListener);
     }
 
     @Override

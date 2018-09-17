@@ -7,4 +7,6 @@
     <string name="hint_inv_name">Name: </string>
     <string name="hint_inv_price">Price: </string>
     <string name="hint_inv_qty">Quantity: </string>
+    <string name="editor_activity_title_new_inv">Add item</string>
+    <string name="editor_activity_title_edit_inv">Edit item</string>
 </resources>
