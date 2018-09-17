@@ -9,4 +9,8 @@
     <string name="hint_inv_qty">Quantity: </string>
     <string name="editor_activity_title_new_inv">Add item</string>
     <string name="editor_activity_title_edit_inv">Edit item</string>
+    <string name="save_item">Save</string>
+    <string name="delete_item">Delete</string>
+    <string name="insert_dummy_data">Insert Dummy Data</string>
+    <string name="delete_items">Delete all items</string>
 </resources>
