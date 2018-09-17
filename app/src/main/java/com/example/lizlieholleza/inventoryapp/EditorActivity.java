@@ -8,6 +8,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.EditText;
 
 public class EditorActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
@@ -18,6 +20,15 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     private EditText priceEditText;
     private EditText quantityEditText;
     private boolean invHasChanged = false;
+
+    private View.OnTouchListener touchListener = new View.OnTouchListener() {
+
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            invHasChanged = true;
+            return false;
+        }
+    };
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, @Nullable Bundle bundle) {
