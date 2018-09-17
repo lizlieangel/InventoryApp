@@ -80,8 +80,8 @@ public class InventoryProvider extends ContentProvider {
         }
 
         Integer price = contentValues.getAsInteger(InventoryEntry.COLUMN_INV_PRICE);
-        if(price != null && price < 0) {
-            throw new IllegalArgumentException("Please input a valid price");
+        if(price != null && price < 1) {
+            throw new IllegalArgumentException("Please input a price (1 or above)");
         }
 
         Integer quantity = contentValues.getAsInteger(InventoryEntry.COLUMN_INV_QTY_AVAILABLE);
@@ -127,5 +127,46 @@ public class InventoryProvider extends ContentProvider {
             default:
                 throw new IllegalArgumentException("Update is not support for " + uri);
         }
+    }
+
+    private int updateInventory(Uri uri, ContentValues contentValues, String selection, String[] selectionArgs) {
+        if(contentValues.containsKey(InventoryEntry.COLUMN_INV_NAME)) {
+            String name = contentValues.getAsString(InventoryEntry.COLUMN_INV_NAME);
+            if(name == null) {
+                throw new IllegalArgumentException("Inventory name is required.");
+            }
+        }
+
+        if(contentValues.containsKey(InventoryEntry.COLUMN_INV_PRICE)) {
+            Integer price  = contentValues.getAsInteger(InventoryEntry.COLUMN_INV_PRICE);
+            if(price != null && price < 1) {
+                throw new IllegalArgumentException("Price is required. (1 or above)");
+            }
+        }
+
+        if (contentValues.containsKey(InventoryEntry.COLUMN_INV_QTY_AVAILABLE)) {
+            Integer quantity = contentValues.getAsInteger(InventoryEntry.COLUMN_INV_QTY_AVAILABLE);
+            if(quantity != null && quantity < 1) {
+                throw new IllegalArgumentException("Quantity is required.");
+            }
+        }
+
+        if (contentValues.containsKey(InventoryEntry.COLUMN_INV_PICTURE)) {
+            String pic = contentValues.getAsString(InventoryEntry.COLUMN_INV_PICTURE);
+            if(pic == null) {
+                throw new IllegalArgumentException("Picture is required");
+            }
+        }
+
+        if(contentValues.size() == 0) {
+            return 0;
+        }
+
+        SQLiteDatabase database = inventoryHelper.getWritableDatabase();
+        int rowsUpdated  = database.update(InventoryEntry.TABLE_NAME, contentValues,selection, selectionArgs);
+        if(rowsUpdated != 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+        return rowsUpdated;
     }
 }
