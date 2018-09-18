@@ -3,6 +3,7 @@
     <string name="empty_inv_name">Item name is empty.</string>
     <string name="empty_inv_price">Price is empty.</string>
     <string name="empty_inv_qty">Quantity is empty.</string>
+    <string name="empty_inv_sup">Suplier name is empty</string>
     <string name="category_overview">Overview</string>
     <string name="hint_inv_name">Name: </string>
     <string name="hint_inv_price">Price: </string>
