@@ -26,25 +26,24 @@ public class InventoryCursorAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        ImageView imageView = (ImageView) view.findViewById(R.id.image);
         TextView nameTextView = (TextView) view.findViewById(R.id.name);
         TextView quantityTextView = (TextView) view.findViewById(R.id.quantity);
         TextView priceTextView = (TextView) view.findViewById(R.id.price);
+        TextView supTextView = (TextView) view.findViewById(R.id.supplier);
 
-        int imageIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_INV_PICTURE);
         int nameIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_INV_NAME);
         int quantityIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_INV_QTY_AVAILABLE);
         int priceIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_INV_PRICE);
+        int supplierIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_INV_SUPPLIER);
 
-        int image = cursor.getInt(imageIndex);
         String name = cursor.getString(nameIndex);
         int quantity = cursor.getInt(quantityIndex);
         int price = cursor.getInt(priceIndex);
+        String supplier = cursor.getString(supplierIndex);
 
-        imageView.setImageResource(image);
         nameTextView.setText(name);
-        quantityTextView.setText(quantity);
-        priceTextView.setText(price);
-
+        quantityTextView.setText(Integer.toString(quantity));
+        priceTextView.setText(Integer.toString(price));
+        supTextView.setText(supplier);
     }
 }
