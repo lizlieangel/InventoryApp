@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         values.put(InventoryEntry.COLUMN_INV_PRICE, 20);
         values.put(InventoryEntry.COLUMN_INV_QTY_AVAILABLE, 50);
         values.put(InventoryEntry.COLUMN_INV_SUPPLIER, "SUPPLIER 1");
+
         Uri newUri = getContentResolver().insert(InventoryEntry.CONTENT_URI, values);
     }
 
