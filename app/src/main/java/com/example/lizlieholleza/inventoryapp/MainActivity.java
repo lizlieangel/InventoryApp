@@ -1,6 +1,7 @@
 package com.example.lizlieholleza.inventoryapp;
 
 import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
@@ -46,5 +47,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         getLoaderManager().initLoader(INV_LOADER, null, this);
+    }
+
+    private void insertItem() {
+        ContentValues values = new ContentValues();
+        values.put(InventoryEntry.COLUMN_INV_NAME, "Item 1");
+        values.put(InventoryEntry.COLUMN_INV_PRICE, 20);
+        values.put(InventoryEntry.COLUMN_INV_QTY_AVAILABLE, 50);
+        values.put(InventoryEntry.COLUMN_INV_SUPPLIER, "SUPPLIER 1");
+        Uri newUri = getContentResolver().insert(InventoryEntry.CONTENT_URI, values);
     }
 }
