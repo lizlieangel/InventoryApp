@@ -61,7 +61,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         nameEditText = (EditText) findViewById(R.id.edit_inv_name);
         priceEditText = (EditText) findViewById(R.id.edit_inv_price);
         quantityEditText = (EditText) findViewById(R.id.edit_inv_qty);
-        supplierEditText = (EditText) findViewById(R.id.edit_inv_supplier);
+        supplierEditText = (EditText) findViewById(R.id.edit_inv_sup);
 
         nameEditText.setOnTouchListener(touchListener);
         priceEditText.setOnTouchListener(touchListener);
@@ -255,7 +255,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             if (rowsDeleted == 0) {
                 Toast.makeText(this, getString(R.string.editor_delete_failed), Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, getString(R.string.edit_delete_success), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.editor_delete_success), Toast.LENGTH_SHORT).show();
             }
         }
         finish();

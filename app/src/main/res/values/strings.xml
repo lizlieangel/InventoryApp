@@ -13,4 +13,16 @@
     <string name="delete_item">Delete</string>
     <string name="insert_dummy_data">Insert Dummy Data</string>
     <string name="delete_items">Delete all items</string>
+    <string name="insert_inv_failed">Failed to insert item</string>
+    <string name="insert_inv_success">Successfully inserted an item</string>
+    <string name="update_inv_failed">Failed to update the item</string>
+    <string name="update_inv_success">Successfully updated the item</string>
+    <string name="unsaved_changes_dialog_msg">Discard your changes and quit editing?</string>
+    <string name="discard">Discard</string>
+    <string name="keep_editing">Keep Editing</string>
+    <string name="delete_dialog_msg">Delete this item?</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="editor_delete_failed">Error with delete item</string>
+    <string name="editor_delete_success">Item deleted</string>
 </resources>
