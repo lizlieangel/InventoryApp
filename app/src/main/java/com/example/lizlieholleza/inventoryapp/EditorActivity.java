@@ -177,7 +177,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 InventoryEntry.COLUMN_INV_PRICE,
                 InventoryEntry.COLUMN_INV_QTY_AVAILABLE,
                 InventoryEntry.COLUMN_INV_SUPPLIER,
-                InventoryEntry.COLUMN_INV_PICTURE
         };
         return new CursorLoader(this, currentInvUri, projection, null, null,null);
     }

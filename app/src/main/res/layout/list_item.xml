@@ -8,7 +8,8 @@
     <ImageView
         android:id="@+id/image"
         android:layout_width="@dimen/image_size"
-        android:layout_height="@dimen/image_size"/>
+        android:layout_height="@dimen/image_size"
+        android:src="@drawable/add_image"/>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="@dimen/image_size"
@@ -27,6 +28,12 @@
             tools:text="Price:"/>
         <TextView
             android:id="@+id/quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            tools:text="Quantity"/>
+        <TextView
+            android:id="@+id/supplier"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_weight="1"
