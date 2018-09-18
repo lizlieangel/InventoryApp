@@ -10,7 +10,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.app.NavUtils;
+import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -18,6 +20,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.lizlieholleza.inventoryapp.data.InventoryContract.InventoryEntry;
@@ -148,17 +151,111 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     }
 
     @Override
-    public Loader<Cursor> onCreateLoader(int i, @Nullable Bundle bundle) {
-        return null;
+    public void onBackPressed() {
+        if(!invHasChanged) {
+            super.onBackPressed();
+            return;
+        }
+        DialogInterface.OnClickListener discardButtonClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                finish();
+            }
+        };
+        showUnsavedChangesDialog(discardButtonClickListener);
     }
 
     @Override
-    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor cursor) {
-
+    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+        String [] projection = {
+                InventoryEntry._ID,
+                InventoryEntry.COLUMN_INV_NAME,
+                InventoryEntry.COLUMN_INV_PRICE,
+                InventoryEntry.COLUMN_INV_QTY_AVAILABLE,
+                InventoryEntry.COLUMN_INV_SUPPLIER,
+                InventoryEntry.COLUMN_INV_PICTURE
+        };
+        return new CursorLoader(this, currentInvUri, projection, null, null,null);
     }
 
     @Override
-    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        if(cursor == null || cursor.getCount() < 1) {
+            return;
+        }
+        if(cursor.moveToFirst()) {
+            int nameColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_INV_NAME);
+            int priceColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_INV_PRICE);
+            int qtyColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_INV_QTY_AVAILABLE);
+            int supColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_INV_SUPPLIER);
+            int picColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_INV_PICTURE);
 
+            String name = cursor.getString(nameColumnIndex);
+            int price = cursor.getInt(priceColumnIndex);
+            int quantity = cursor.getInt(qtyColumnIndex);
+            String supplier = cursor.getString(supColumnIndex);
+            int picture = cursor.getInt(picColumnIndex);
+
+            nameEditText.setText(name);
+            priceEditText.setText(Integer.toString(price));
+            quantityEditText.setText(Integer.toString(quantity));
+
+        }
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        nameEditText.setText("");
+        priceEditText.setText("");
+        quantityEditText.setText("");
+    }
+
+    private void showUnsavedChangesDialog(DialogInterface.OnClickListener discardButtonClickListener) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.unsaved_changes_dialog_msg);
+        builder.setPositiveButton(R.string.discard, discardButtonClickListener);
+        builder.setNegativeButton(R.string.keep_editing, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if(dialogInterface != null) {
+                    dialogInterface.dismiss();
+                }
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    private void showDeleteConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.delete_dialog_msg);
+        builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                deleteInventory();
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if(dialogInterface != null) {
+                    dialogInterface.dismiss();
+                }
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    private void deleteInventory() {
+        if (currentInvUri != null) {
+            int rowsDeleted = getContentResolver().delete(currentInvUri, null, null);
+            if (rowsDeleted == 0) {
+                Toast.makeText(this, getString(R.string.editor_delete_failed), Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, getString(R.string.edit_delete_success), Toast.LENGTH_SHORT).show();
+            }
+        }
+        finish();
     }
 }
