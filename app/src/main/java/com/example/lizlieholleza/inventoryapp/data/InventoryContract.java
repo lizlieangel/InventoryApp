@@ -20,7 +20,6 @@ public class InventoryContract {
         public final static String COLUMN_INV_PRICE = "price";
         public final static String COLUMN_INV_QTY_AVAILABLE = "qty_available";
         public final static String COLUMN_INV_SUPPLIER = "supplier";
-        public final static String COLUMN_INV_PICTURE = "picture";
 
     }
 }
