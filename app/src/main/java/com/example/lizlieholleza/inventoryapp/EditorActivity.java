@@ -33,6 +33,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     private EditText nameEditText;
     private EditText priceEditText;
     private EditText quantityEditText;
+    private EditText supplierEditText;
     private boolean invHasChanged = false;
 
     private View.OnTouchListener touchListener = new View.OnTouchListener() {
@@ -60,16 +61,19 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         nameEditText = (EditText) findViewById(R.id.edit_inv_name);
         priceEditText = (EditText) findViewById(R.id.edit_inv_price);
         quantityEditText = (EditText) findViewById(R.id.edit_inv_qty);
+        supplierEditText = (EditText) findViewById(R.id.edit_inv_supplier);
 
         nameEditText.setOnTouchListener(touchListener);
         priceEditText.setOnTouchListener(touchListener);
         quantityEditText.setOnTouchListener(touchListener);
+        supplierEditText.setOnTouchListener(touchListener);
     }
 
     private void saveItem() {
         String nameString = nameEditText.getText().toString().trim();
         String priceString = priceEditText.getText().toString().trim();
         String quantityString = quantityEditText.getText().toString().trim();
+        String supplierString = supplierEditText.getText().toString().trim();
 
         if(currentInvUri == null && TextUtils.isEmpty(nameString) && TextUtils.isEmpty(priceString) && TextUtils.isEmpty(quantityString)) {
             return;
@@ -188,18 +192,16 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             int priceColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_INV_PRICE);
             int qtyColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_INV_QTY_AVAILABLE);
             int supColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_INV_SUPPLIER);
-            int picColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_INV_PICTURE);
 
             String name = cursor.getString(nameColumnIndex);
             int price = cursor.getInt(priceColumnIndex);
             int quantity = cursor.getInt(qtyColumnIndex);
             String supplier = cursor.getString(supColumnIndex);
-            int picture = cursor.getInt(picColumnIndex);
 
             nameEditText.setText(name);
             priceEditText.setText(Integer.toString(price));
             quantityEditText.setText(Integer.toString(quantity));
-
+            supplierEditText.setText(supplier);
         }
     }
 
@@ -208,6 +210,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         nameEditText.setText("");
         priceEditText.setText("");
         quantityEditText.setText("");
+        supplierEditText.setText("");
     }
 
     private void showUnsavedChangesDialog(DialogInterface.OnClickListener discardButtonClickListener) {
