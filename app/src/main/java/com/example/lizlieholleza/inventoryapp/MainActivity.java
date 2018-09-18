@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -56,5 +58,24 @@ public class MainActivity extends AppCompatActivity {
         values.put(InventoryEntry.COLUMN_INV_QTY_AVAILABLE, 50);
         values.put(InventoryEntry.COLUMN_INV_SUPPLIER, "SUPPLIER 1");
         Uri newUri = getContentResolver().insert(InventoryEntry.CONTENT_URI, values);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.insert_dummy_data:
+                insertItem();
+                return true;
+            case R.id.delete_all_items:
+                deleteAllItems();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
