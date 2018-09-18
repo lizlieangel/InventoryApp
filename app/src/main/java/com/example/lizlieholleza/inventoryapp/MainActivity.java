@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,7 +18,6 @@ import com.example.lizlieholleza.inventoryapp.data.InventoryContract;
 public class MainActivity extends AppCompatActivity {
 
     private static final int INV_LOADER = 0;
-
     InventoryCursorAdapter cursorAdapter;
 
     @Override
@@ -77,5 +77,10 @@ public class MainActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void deleteAllItems() {
+        int rowsDeleted = getContentResolver().delete(InventoryEntry.CONTENT_URI, null, null);
+        Log.v("MainActivity", rowsDeleted + " rows deleted from the inventory database.");
     }
 }
