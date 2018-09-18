@@ -88,11 +88,6 @@ public class InventoryProvider extends ContentProvider {
             throw new IllegalArgumentException("Please input a valid quantity");
         }
 
-        Integer picture = contentValues.getAsInteger(InventoryEntry.COLUMN_INV_PICTURE);
-        if(picture == null) {
-            throw new IllegalArgumentException("Please add a picture to the item");
-        }
-
         SQLiteDatabase database =  inventoryHelper.getWritableDatabase();
 
         long id = database.insert(InventoryEntry.TABLE_NAME, null, contentValues);
@@ -166,13 +161,6 @@ public class InventoryProvider extends ContentProvider {
             Integer quantity = contentValues.getAsInteger(InventoryEntry.COLUMN_INV_QTY_AVAILABLE);
             if(quantity != null && quantity < 1) {
                 throw new IllegalArgumentException("Quantity is required.");
-            }
-        }
-
-        if (contentValues.containsKey(InventoryEntry.COLUMN_INV_PICTURE)) {
-            Integer pic = contentValues.getAsInteger(InventoryEntry.COLUMN_INV_PICTURE);
-            if(pic == null) {
-                throw new IllegalArgumentException("Picture is required");
             }
         }
 
