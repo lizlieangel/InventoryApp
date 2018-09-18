@@ -3,7 +3,13 @@ package com.example.lizlieholleza.inventoryapp;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,7 +21,7 @@ import android.widget.ListView;
 import com.example.lizlieholleza.inventoryapp.data.InventoryContract.InventoryEntry;
 import com.example.lizlieholleza.inventoryapp.data.InventoryContract;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
 
     private static final int INV_LOADER = 0;
     InventoryCursorAdapter cursorAdapter;
@@ -82,5 +88,27 @@ public class MainActivity extends AppCompatActivity {
     private void deleteAllItems() {
         int rowsDeleted = getContentResolver().delete(InventoryEntry.CONTENT_URI, null, null);
         Log.v("MainActivity", rowsDeleted + " rows deleted from the inventory database.");
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int i, @Nullable Bundle bundle) {
+        String [] projection = {
+                InventoryEntry._ID,
+                InventoryEntry.COLUMN_INV_NAME,
+                InventoryEntry.COLUMN_INV_PRICE,
+                InventoryEntry.COLUMN_INV_QTY_AVAILABLE,
+                InventoryEntry.COLUMN_INV_SUPPLIER,
+        };
+        return new CursorLoader(this, InventoryEntry.CONTENT_URI, projection, null, null,null);
+    }
+
+    @Override
+    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor cursor) {
+        cursorAdapter.swapCursor(cursor);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        cursorAdapter.swapCursor(null);
     }
 }
